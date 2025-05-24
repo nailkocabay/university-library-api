@@ -18,29 +18,63 @@
 
 ---
 
+
 ## 📝 API Açıklaması
 
-* **Varlıklar (Entities)**: `books`, `students`, `loans`
-* **CRUD Endpoint'leri**:
+### Genel Yapı
 
-  * `GET/POST/PUT/DELETE /books`
-  * `GET/POST/PUT/DELETE /students`
-  * `GET/POST /loans`, `PATCH /loans/{id}/return`
-* **components/schemas**: Her varlık için nesne tanımları yapıldı (Book, Student, Loan).
-* **parameters**: `page`, `size` (query), `id` (path) parametreleri kullanıldı.
-* **responses**: Tüm endpointlerde 200, 201, 400, 404 gibi durum kodları tanımlandı.
-* **Sayfalama**: `GET /books` için `page` ve `size` parametreleriyle desteklenmektedir.
-* **Hata Durumları**: Eksik veri ya da hatalı isteklerde `400 Bad Request` gibi cevaplar tanımlandı.
-* **Açıklamalar ve Tag'ler**: Tüm endpointler özet ve tag ile açıklandı.
+Bu API, bir üniversite kütüphane sistemini temsil etmektedir. Aşağıdaki varlıklar yer almaktadır:
+
+- **Book**: Kitaplar (id, title, author, year)
+- **User**: Kitap alan kullanıcılar (id, name, email)
+- **Loan**: Ödünç alma işlemleri (userId, bookId, loanDate, returnDate)
+
+### CRUD İşlemleri
+
+- `GET /books` – Tüm kitapları listeler  
+- `GET /books/{bookId}` – Belirli bir kitabı getirir  
+- `POST /books` – Yeni kitap ekler  
+- `PUT /books/{bookId}` – Kitap günceller  
+- `DELETE /books/{bookId}` – Kitap siler
+
+Benzer şekilde:
+- `GET /users`, `POST /users`, `PUT /users/{userId}`, `DELETE /users/{userId}`
+- `GET /loans`, `POST /loans`, `DELETE /loans/{loanId}` uç noktaları yer alır
+
+### Components Kullanımı
+
+- `schemas` altında `Book`, `User`, `Loan`, `Error` tanımları yer almakta.
+- `responses` bölümünde başarılı ve hatalı yanıtlar şemalara bağlanmıştır.
+- Parametre tanımlamaları doğrudan path üzerinde yapılmıştır (`{bookId}`, `{userId}`, `{loanId}`).
+
+### Sayfalama ve Hata Durumları
+
+- Sayfalama desteği `limit` ve `offset` parametreleriyle `GET /books` ve `GET /users` için tanımlanmış.
+- Hata durumları `Error` nesnesi ile yönetilmekte. Tüm endpoint’lerde `400`, `404` ve `500` gibi olası durumlar tanımlanmış.
 
 ---
 
-## 🧪 Test Notları (Opsiyonel)
+## 🧪 Test Notları
 
 * `GET /books`: Kitaplar listesini döner.
 * `POST /students`: Yeni öğrenci eklemek için doğru şemaya uygun JSON gönderilir.
 * `PATCH /loans/{id}/return`: Ödünç kitap iade edilir.
 * `400` hatası: Eksik alanlar için dönür (Swagger üzerinden test edilmiştir).
+
+Swagger Editor'da aşağıdaki senaryolar test edilmiştir:
+
+### ✅ `GET /books`
+
+- Yanıt:
+  ```json
+  [
+    {
+      "id": 1,
+      "title": "Introduction to AI",
+      "author": "John McCarthy",
+      "year": 2020
+    }
+  ]
 
 ---
 
