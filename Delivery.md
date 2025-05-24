@@ -2,7 +2,7 @@
 
 ## 👤 Öğrenci Bilgileri
 
-* **Ad Soyad**: Nail Koçabay
+* **Ad Soyad**: Nail Kocabay
 * **Öğrenci Numarası**: 170422036
 
 ---
