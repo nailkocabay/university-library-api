@@ -8,8 +8,97 @@
 ---
 
 ## 📂 OpenAPI YAML Dosyası
+```
+openapi: 3.0.3
+info:
+  title: University Library API
+  version: 1.0.0
+  description: API for managing university library resources
+paths:
+  /books:
+    get:
+      summary: Get list of books
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+    post:
+      summary: Add a new book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '201':
+          description: Book created
+  /books/{bookId}:
+    get:
+      summary: Get a book by ID
+      parameters:
+        - in: path
+          name: bookId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Book details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
 
-* **openapi.yaml** dosyası GitHub reposuna yüklenmiştir.
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        author:
+          type: string
+        year:
+          type: integer
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+    Loan:
+      type: object
+      properties:
+        userId:
+          type: integer
+        bookId:
+          type: integer
+        loanDate:
+          type: string
+          format: date
+        returnDate:
+          type: string
+          format: date
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: An error occurred
+
+  ```
+
 * Swagger Editor ile test edilmiştir.
 
 ### 🔗 GitHub Repo Linki
